@@ -1,0 +1,24 @@
+#!/bin/bash
+if [ $# != 4 ] ; then
+echo "USAGE: cfc-auto-build \$ImageName \$DockerfilePath \$RegistryUsername \$RegistryPassword" 
+exit 255
+fi
+
+imagename=$1
+dockerfile=$2
+user=$3
+password=$4
+
+namespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+
+if [ "$namespace" = "default" ]; then
+  namespace="admin"
+fi
+
+docker build --rm -t $imagename $dockerfile || exit 255
+
+docker tag $imagename  master.cfc:8500/$namespace/$imagename || exit 255
+
+docker login -u $user -p $password  master.cfc:8500 || exit 255
+
+docker push master.cfc:8500/$namespace/$imagename || exit 255
