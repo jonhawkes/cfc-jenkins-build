@@ -8,9 +8,9 @@ COPY cfc-auto-helm-k8sm /usr/local/bin/cfc-auto-helm-k8sm
 
 COPY cfc-auto-build /usr/local/bin/cfc-auto-build
 
-COPY cfc-auto-depoly-k8s /usr/local/bin/cfc-auto-depoly-k8s
+COPY cfc-auto-deploy-k8s /usr/local/bin/cfc-auto-deploy-k8s
 
-COPY cfc-auto-depoly-k8sm /usr/local/bin/cfc-auto-depoly-k8sm
+COPY cfc-auto-deploy-k8sm /usr/local/bin/cfc-auto-deploy-k8sm
 
 COPY helm-2.1.3 /usr/local/bin/helm-2.1.3
 
