@@ -1,0 +1,33 @@
+#!/bin/bash
+if [ $# != 2 ] ; then
+echo "USAGE: cfc-auto-build \$ImageName \$DockerfilePath" 
+exit 255
+fi
+
+imagename=$1
+dockerfile=$2
+
+podnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+
+regkey=$(kubectl-1.4.7 get secret --namespace=$podnamespace | grep .registrykey | awk '{print $1}')
+
+secert=$(kubectl-1.4.7 get secret $regkey --namespace=$podnamespace -o yaml | grep .dockercfg: | awk '{print $2}')
+
+keys=$(echo $secert | base64 -d)
+
+username=$(echo $keys | jq '."https://master.cfc:8500".username')
+
+password=$(echo $keys | jq '."https://master.cfc:8500".password')
+
+
+if [ "$podnamespace" = "default" ]; then
+  podnamespace="admin"
+fi
+
+docker build --rm -t $imagename $dockerfile || exit 255
+
+docker tag $imagename  master.cfc:8500/$podnamespace/$imagename || exit 255
+
+docker login -u ${username:1:-1} -p ${password:1:-1}  master.cfc:8500 || exit 255
+
+docker push master.cfc:8500/$podnamespace/$imagename || exit 255

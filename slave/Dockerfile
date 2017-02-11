@@ -2,15 +2,19 @@ FROM ma1dock1.platformlab.ibm.com/lcn-reg/jekins-jnlp-slave:2.52
 
 USER root
 
+RUN apt-get update && apt-get -y install --no-install-recommends jq
+
 COPY cfc-auto-helm-k8s /usr/local/bin/cfc-auto-helm-k8s
 
 COPY cfc-auto-helm-k8sm /usr/local/bin/cfc-auto-helm-k8sm
 
-COPY cfc-auto-build /usr/local/bin/cfc-auto-build
+COPY cfc-auto-build-k8s /usr/local/bin/cfc-auto-build-k8s
 
-COPY cfc-auto-depoly-k8s /usr/local/bin/cfc-auto-depoly-k8s
+COPY cfc-auto-build-k8sm /usr/local/bin/cfc-auto-build-k8sm
 
-COPY cfc-auto-depoly-k8sm /usr/local/bin/cfc-auto-depoly-k8sm
+COPY cfc-auto-deploy-k8s /usr/local/bin/cfc-auto-deploy-k8s
+
+COPY cfc-auto-deploy-k8sm /usr/local/bin/cfc-auto-deploy-k8sm
 
 COPY helm-2.1.3 /usr/local/bin/helm-2.1.3
 
