@@ -28,6 +28,6 @@ docker build --rm -t $imagename $dockerfile || exit 255
 
 docker tag $imagename  master.cfc:8500/$podnamespace/$imagename || exit 255
 
-docker login -u ${username:1:-1} -p ${password:1:-1}  master.cfc:8500 || exit 255
+docker login -u ${username:1:-1} -p ${password:1:-1} -e ibm.com master.cfc:8500 || exit 255
 
 docker push master.cfc:8500/$podnamespace/$imagename || exit 255
