@@ -15,9 +15,9 @@ Change tini version to v0.10.0
 
 (4) Build tini binary for ppc64le
 
-```git clone https://github.com/krallin/tini.git
-   git checkout v0.10.0
-   cmake .
-   make
-   mv tini-static .../docker```
+```git clone https://github.com/krallin/tini.git```
+```git checkout v0.10.0```
+```cmake .```
+```make```
+```mv tini-static .../docker```
 
