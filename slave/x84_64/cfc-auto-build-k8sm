@@ -20,10 +20,6 @@ username=$(echo $keys | jq '."https://master.cfc:8500".username')
 password=$(echo $keys | jq '."https://master.cfc:8500".password')
 
 
-if [ "$podnamespace" = "default" ]; then
-  podnamespace="admin"
-fi
-
 docker build --rm -t $imagename $dockerfile || exit 255
 
 docker tag $imagename  master.cfc:8500/$podnamespace/$imagename || exit 255

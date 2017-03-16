@@ -1,6 +1,4 @@
-FROM ma1dock1.platformlab.ibm.com/lcn-reg/jekins-jnlp-slave:2.52 
-
-USER root
+FROM ma1dock1.platformlab.ibm.com/lcn-reg/jekins-jnlp-slave-root:2.52
 
 RUN apt-get update && apt-get -y install --no-install-recommends jq
 
@@ -24,6 +22,5 @@ COPY kubectl-1.5.2 /usr/local/bin/kubectl-1.5.2
 
 COPY kubectl-1.4.7 /usr/local/bin/kubectl-1.4.7
 
-RUN curl -fsSL https://get.docker.com/builds/Linux/x86_64/docker-1.11.1.tgz | tar --strip-components=1 -xvz -C /usr/local/bin/ docker/docker \
-
+RUN curl -fsSL https://get.docker.com/builds/Linux/x86_64/docker-1.11.1.tgz | tar --strip-components=1 -xvz -C /usr/local/bin/ docker/docker
 
