@@ -1,0 +1,24 @@
+#!/bin/bash
+if [ $# != 2 ] ; then
+echo "USAGE: cfc-auto-depoly \$FilePath \$FileFormat" 
+exit 255
+fi
+
+depolymentfile=$1
+if [ "$2" != "json" ] && [ "$2" != "yaml" ]; then
+    echo "The file format must be json or yaml"
+    exit 255
+fi
+
+fileformat=$2
+appnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+kubernetes_service_url="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT_HTTPS"
+token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+
+curl -k -X POST -H "Authorization: Bearer $token" -H "content-type:application/$fileformat" "$kubernetes_service_url/apis/extensions/v1beta1/namespaces/$appnamespace/deployments" -d @./$depolymentfile 2>&1 | tee log | grep -w '"Failure",'
+if [ $? -eq 0 ]; then
+    cat log
+    exit 255
+else
+    cat log
+fi
