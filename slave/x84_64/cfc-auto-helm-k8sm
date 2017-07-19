@@ -7,7 +7,7 @@ fi
 
 chartname=$1
 
-export HELM_HOST=helm.kube-system:44134
+export HELM_HOST=tiller.kube-system:44134
 
 podnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 

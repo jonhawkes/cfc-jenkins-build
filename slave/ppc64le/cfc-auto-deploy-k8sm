@@ -15,4 +15,4 @@ kubectl-1.4.7 config set-cluster cfc --server=$kubernetes_service_url --insecure
 kubectl-1.4.7 config set-context cfc --user=user || exit 255
 kubectl-1.4.7 config set-context cfc --cluster=cfc || exit 255
 kubectl-1.4.7 config use-context cfc || exit 255
-kubectl-1.4.7 create -f $depolyfiles --namespace=$podnamespace || exit 255
+kubectl-1.4.7 apply -f $depolyfiles --namespace=$podnamespace || exit 255

@@ -9,7 +9,7 @@ dockerfile=$2
 
 podnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 
-regkey=$(kubectl-1.5.2 get secret --namespace=$podnamespace | grep .registrykey | awk '{print $1}')
+regkey=$(kubectl-1.5.2 get secret --namespace=$podnamespace | grep .registrykey | awk '{print $1}' | awk '{print $1}')
 
 secert=$(kubectl-1.5.2 get secret $regkey --namespace=$podnamespace -o yaml | grep .dockercfg: | awk '{print $2}')
 
