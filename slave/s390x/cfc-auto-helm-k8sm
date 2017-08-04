@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# != 1 ] ; then
+echo "USAGE: cfc-auto-helm-k8sm \$ChartName"
+exit 255
+fi
+
+chartname=$1
+
+export HELM_HOST=tiller.kube-system:44134
+
+podnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+
+helm-2.0.0 init --client-only || exit 255
+
+helm-2.0.0 lint --strict $chartname || exit 255
+
+helm-2.0.0 install $chartname --namespace $podnamespace || exit 255
