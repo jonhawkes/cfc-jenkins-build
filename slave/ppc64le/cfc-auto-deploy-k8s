@@ -10,9 +10,9 @@ podnamespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 kubernetes_service_url="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT_HTTPS"
 token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 
-kubectl-1.6.1 config set-credentials user --token=$token || exit 255
-kubectl-1.6.1 config set-cluster cfc --server=$kubernetes_service_url --insecure-skip-tls-verify=true || exit 255
-kubectl-1.6.1 config set-context cfc --user=user || exit 255
-kubectl-1.6.1 config set-context cfc --cluster=cfc || exit 255
-kubectl-1.6.1 config use-context cfc || exit 255
-kubectl-1.6.1 apply -f $depolyfiles --namespace=$podnamespace || exit 255
+kubectl config set-credentials user --token=$token || exit 255
+kubectl config set-cluster cfc --server=$kubernetes_service_url --insecure-skip-tls-verify=true || exit 255
+kubectl config set-context cfc --user=user || exit 255
+kubectl config set-context cfc --cluster=cfc || exit 255
+kubectl config use-context cfc || exit 255
+kubectl apply -f $depolyfiles --namespace=$podnamespace || exit 255
